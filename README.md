@@ -36,3 +36,6 @@ The fastest algorithm was HeapSort. This algorithm has a time complexity of O(n 
 
 ### Thread Pool
 The provided thread pool has been replaced by BSThreadPool. This thread pool is faster than the provided thread pool. This is because the provided thread pool uses a mutex to lock the queue. This means that only one thread can access the queue at a time. BSThreadPool uses a lock free queue. This means that multiple threads can access the queue at the same time. This speeds up the application with around 1.0.
+
+### Result
+![tankgame-speedup](https://github.com/NHLStenden-HBO-ICT-SE/tank-opdracht-Jessedev1/assets/60600868/774a1453-016f-4acd-82dd-0a4fe4dd47d7)
