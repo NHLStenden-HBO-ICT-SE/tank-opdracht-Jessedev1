@@ -91,8 +91,4 @@ using namespace Tmpl8;
 #include "particle_beam.h"
 
 #include "game.h"
-
-#include <oneapi/tbb.h>
-#include <oneapi/tbb/parallel_for.h>
-#include <oneapi/tbb/blocked_range.h>
 // clang-format on
