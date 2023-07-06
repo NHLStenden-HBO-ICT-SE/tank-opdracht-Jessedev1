@@ -1,8 +1,10 @@
 #pragma once
+#include "precomp.h"
 
 namespace Tmpl8
 {
     class Terrain; //forward declare
+    class Cell;
 
 enum allignments
 {
@@ -13,7 +15,7 @@ enum allignments
 class Tank
 {
   public:
-    Tank(float pos_x, float pos_y, allignments allignment, Sprite* tank_sprite, Sprite* smoke_sprite, float tar_x, float tar_y, float collision_radius, int health, float max_speed);
+    Tank(float pos_x, float pos_y, allignments allignment, Sprite* tank_sprite, Sprite* smoke_sprite, float tar_x, float tar_y, float collision_radius, int health, float max_speed, int VecOffset);
 
     ~Tank();
 
@@ -42,6 +44,7 @@ class Tank
     vector<vec2> current_route;
 
     int health;
+    int VectorOffset;
 
     float collision_radius;
     vec2 force;
@@ -58,6 +61,8 @@ class Tank
     Sprite* tank_sprite;
     Sprite* smoke_sprite;
 
+    Cell* owner_cell;
+    int cellIndex = -1;
 };
 
 } // namespace Tmpl8

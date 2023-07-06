@@ -1,4 +1,7 @@
 #pragma once
+#include "Grid.h"
+#include <memory>
+#include <BS_thread_pool.hpp>
 
 namespace Tmpl8
 {
@@ -10,7 +13,7 @@ class Particle_beam;
 
 class Game
 {
-  public:
+public:
     void set_target(Surface* surface) { screen = surface; }
     void init();
     void shutdown();
@@ -18,7 +21,7 @@ class Game
     void draw();
     void tick(float deltaTime);
     void insertion_sort_tanks_health(const std::vector<Tank>& original, std::vector<const Tank*>& sorted_tanks, int begin, int end);
-    void draw_health_bars(const std::vector<const Tank*>& sorted_tanks, const int team);
+    void draw_health_bars(const std::vector<Tank*>& sorted_tanks, const int team);
     void measure_performance();
 
     Tank& find_closest_enemy(Tank& current_tank);
@@ -43,10 +46,17 @@ class Game
     { /* implement if you want to handle keys */
     }
 
-  private:
+private:
+    int numThreads = std::thread::hardware_concurrency() * 2;
+
+    std::unique_ptr<Grid> grid;
+
     Surface* screen;
 
     vector<Tank> tanks;
+    vector<Tank*> Bluetanks;
+    vector<Tank*> Redtanks;
+
     vector<Rocket> rockets;
     vector<Smoke> smokes;
     vector<Explosion> explosions;
@@ -58,10 +68,22 @@ class Game
     Font* frame_count_font;
     long long frame_count = 0;
 
+
     bool lock_update = false;
+
+    std::unique_ptr<BS::thread_pool> bsThreadPool;
 
     //Checks if a point lies on the left of an arbitrary angled line
     bool left_of_line(vec2 line_start, vec2 line_end, vec2 point);
+
+
+    void processRocketUpdate(std::vector<Rocket>& pRockets);
+    void processRocketConvex();
+    void processGameTankNudging(std::vector<Tank>& pTanks);
+    void processGameTankUpdate(std::vector<Tank*> to_update);
+    void processLaserUpdate();
+    void calcForcefield();
+
 };
 
 }; // namespace Tmpl8
